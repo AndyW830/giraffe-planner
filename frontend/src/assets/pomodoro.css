@@ -1,0 +1,74 @@
+.pomodoro-container {
+  text-align: center;
+  font-family: "ZCOOL KuaiLe", sans-serif;
+  background-color: #fff8f0;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(255, 102, 0, 0.2);
+  max-width: 400px;
+  margin: 50px auto;
+}
+
+h1 {
+  color: #ff6600;
+}
+
+.timer {
+  font-size: 64px;
+  margin: 20px 0;
+  color: #333;
+}
+
+.status {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.buttons button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.buttons button:hover {
+  transform: scale(1.1);
+  background-color: #e65800;
+}
+
+.counter {
+  margin-top: 30px;
+  font-size: 18px;
+  color: #444;
+}
+
+.info-toggle {
+  margin: 20px 0;
+}
+
+.info-toggle button {
+  background-color: transparent;
+  border: none;
+  color: #ff6600;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.info-box {
+  background-color: #fff7eb;
+  border-left: 4px solid #ff6600;
+  padding: 15px;
+  margin: 10px auto 20px;
+  max-width: 400px;
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.6;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(255, 102, 0, 0.1);
+}

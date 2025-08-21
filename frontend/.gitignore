@@ -5,7 +5,6 @@ frontend/build/
 # Python virtual environments and caches
 backend/venv/
 backend/.venv/
-backend/migrations.py
 backend/__pycache__/
 **/__pycache__/
 *.pyc
