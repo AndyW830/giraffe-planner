@@ -304,6 +304,11 @@ def get_checkins_by_date():
     return jsonify(resp)
 
 
+@app.route("/healthz")
+def health_check():
+    return {"status": "ok"}, 200
+
+
 
 if __name__ == '__main__':
     app.run(host='localhost', port=5000, debug=True)
