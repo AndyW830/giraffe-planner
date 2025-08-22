@@ -11,7 +11,7 @@ import sqlite3
 
 # ---------- 基础初始化 ----------
 app = Flask(__name__)
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=15)
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(days=7)  # JWT 默认 7 天过期
 
 if os.getenv("RUN_DB_SETUP") == "1":
     run_db_setup()
@@ -155,19 +155,34 @@ def update_task(task_id):
 @app.route('/api/task-types', methods=['GET', 'POST'])
 @jwt_required()
 def task_types():
+    uid = int(get_jwt_identity())
     conn = get_db_connection()
-    cursor = conn.cursor()
+    cur = conn.cursor()
+
     if request.method == 'POST':
         data = request.json or {}
         name = (data.get('name') or '').strip()
         if not name:
             conn.close()
             return jsonify({"error": "name required"}), 400
-        cursor.execute("INSERT OR IGNORE INTO task_types (name) VALUES (?)", (name,))
+
+        # 插入为当前用户的私有类型
+        cur.execute(
+            "INSERT OR IGNORE INTO task_types (name, user_id) VALUES (?, ?)",
+            (name, uid)
+        )
         conn.commit()
-    types = cursor.execute("SELECT * FROM task_types").fetchall()
+
+    # 查询：系统默认（user_id IS NULL） + 当前用户私有
+    rows = cur.execute(
+        "SELECT id, name, user_id FROM task_types WHERE user_id IS NULL OR user_id = ? ORDER BY id",
+        (uid,)
+    ).fetchall()
+
     conn.close()
-    return jsonify([dict(row) for row in types])
+    return jsonify([dict(r) for r in rows])
+
+
 
 
 # ---------- 打卡模板 ----------

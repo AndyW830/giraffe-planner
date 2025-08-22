@@ -98,6 +98,25 @@ def run_db_setup():
             cur.execute(f"ALTER TABLE {tbl} ADD COLUMN user_id INTEGER")
     conn.commit()
 
+    # 检查 task_types 是否有 user_id
+    if _table_exists(cur, "task_types"):
+        if not _column_exists(cur, "task_types", "user_id"):
+            # -- 老表没有 user_id，需要重建表 --
+            cur.execute("ALTER TABLE task_types RENAME TO task_types_old")
+            cur.execute("""
+            CREATE TABLE task_types (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                user_id INTEGER,
+                UNIQUE(name, user_id)
+            )
+            """)
+            # 迁移旧数据为系统默认
+            cur.execute("INSERT INTO task_types (id, name, user_id) SELECT id, name, NULL FROM task_types_old")
+            cur.execute("DROP TABLE task_types_old")
+            conn.commit()
+
+
     # 4) 若库里还没有任何用户 -> 创建占位用户，并把历史数据归属过来
     cur.execute("SELECT id FROM users LIMIT 1")
     owner_row = cur.fetchone()

@@ -4,6 +4,7 @@ function Sidebar() {
     <nav className="sidebar">
       <h2><Link to={"/"}>🦒 长颈鹿计划</Link></h2>
       <ul>
+        <li><Link to={"/"}>回到首页</Link></li>
         <li><Link to="/plan">我的计划 📖</Link></li>
         <li><Link to="/daily-tasks">打卡记录 📆</Link></li>
         <li><Link to="/stats">统计分析 📊</Link></li>
