@@ -9,18 +9,14 @@ Helps you plan tasks, track daily check-ins, and visualize progress — all in a
 
 ### Plan Page
 <img width="1919" height="902" alt="image" src="https://github.com/user-attachments/assets/d3fa0953-89eb-45b0-96f4-024dd10e04c9" />
-<img width="1919" height="906" alt="image" src="https://github.com/user-attachments/assets/6890a970-2ee6-48b5-af50-8c85f2ff40df" />
-<img width="1919" height="907" alt="image" src="https://github.com/user-attachments/assets/af5aac29-2ca0-4ef7-9a58-8ec724b07084" />
 
 
 ### Daily Tasks Page
 <img width="1917" height="908" alt="image" src="https://github.com/user-attachments/assets/76e02bb7-c01f-4a0d-b534-40ba41d4308f" />
-<img width="1919" height="911" alt="image" src="https://github.com/user-attachments/assets/41b78bc7-c647-4866-93a5-7a2a8db453be" />
-<img width="1919" height="900" alt="image" src="https://github.com/user-attachments/assets/c7c8aff5-1010-42e8-8942-cb7c4aa4e0ff" />
+
 
 ### Stats Page
 <img width="1919" height="911" alt="image" src="https://github.com/user-attachments/assets/1cc9d4db-c27a-41a6-bbc1-2e783a585e05" />
-<img width="1919" height="888" alt="image" src="https://github.com/user-attachments/assets/2740ed69-ddf3-4784-97b1-edc494f23cda" />
 
 ### Pomodoro Page
 <img width="1919" height="908" alt="image" src="https://github.com/user-attachments/assets/c7499c13-73c6-46b0-9edc-eddc53c3cb5d" />
