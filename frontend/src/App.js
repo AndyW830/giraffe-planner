@@ -144,7 +144,7 @@ function AuthedApp({ onLogout }) {
 
   return (
     <Router>
-      <button onClick={onLogout} style={{ position: "fixed", right: 16, top: 16 }}>退出登录</button>
+      <button onClick={onLogout} style={{ position: "fixed", right: 16, top: 16 }}>Log out</button>
       <Routes>
         <Route path="/" element={<Home tasks={tasks} daily_tasks={dailyTaskTemplates} />} />
         <Route
