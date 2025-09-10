@@ -63,7 +63,7 @@ def run_db_setup():
     )
     """)
     # 默认任务类型
-    for t in ("📘 学习", "🧹 生活", "🖥️ 工作", "💪 锻炼"):
+    for t in ("📘 Study", "🧹 Life", "🖥️ Work", "💪 Exercise"):
         cur.execute("INSERT OR IGNORE INTO task_types (name) VALUES (?);", (t,))
 
     cur.execute("""

@@ -12,6 +12,7 @@ import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import { getToken, clearToken } from "./auth";
 import { authFetch } from "./auth"; // 👈 统一带 Authorization 的 fetch
+import { useTranslation } from "react-i18next";
 
 // ------- 统计用的小工具函数 -------
 function getWeeklyData(tasks) {
@@ -72,6 +73,7 @@ export default function App() {
 
 // ================= 登录后的应用：所有业务 Hooks 都放这里 =================
 function AuthedApp({ onLogout }) {
+  const { t } = useTranslation();
   // 业务状态
   const [tasks, setTasks] = useState([]);
   const [tasksType, setTasksType] = useState([]);
@@ -91,19 +93,19 @@ function AuthedApp({ onLogout }) {
         type: t.type || "未分类",
         deleted: t.deleted || false,
       })));
-    }).catch(e => console.error("加载任务失败：", e));
+    }).catch(e => console.error(t("app.taskerr"), e));
   }, []);
 
   // 任务类型
   useEffect(() => {
     authFetch("/api/task-types").then(r => r.json()).then(d => setTasksType(d.map(x => x.name)))
-      .catch(e => console.error("加载任务类型失败：", e));
+      .catch(e => console.error(t("app.typeerr"), e));
   }, []);
 
   // 模板
   useEffect(() => {
     authFetch("/api/daily-templates").then(r => r.json()).then(setDailyTaskTemplates)
-      .catch(e => console.error("加载打卡模板失败：", e));
+      .catch(e => console.error(t("app.dailytaskerr1"), e));
   }, []);
 
   // 本周每天的打卡 map
@@ -123,7 +125,7 @@ function AuthedApp({ onLogout }) {
     const today = dayjs().format("YYYY-MM-DD");
     authFetch(`/api/checkins?date=${today}`).then(r => r.json())
       .then(map => setDailyCheckins(prev => ({ ...prev, [today]: map })))
-      .catch(e => console.error("加载打卡记录失败:", e));
+      .catch(e => console.error(t("app.dailytaskerr2"), e));
   }, []);
 
   // 连续全完成 streak

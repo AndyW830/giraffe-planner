@@ -181,6 +181,11 @@
   "planpage.notaskshint2":"🎉 No tasks scheduled for later, focus on completing this week's tasks~",
   "planpage.overdue":"⚠️ Overdue Tasks",
   "planpage.notaskshint3":"🎉 No Overdue tasks, keep it going!",
-  "planpage.tip":"🥇 “Believe you can, and you’re halfway there.” —Theodore Roosevelt"
+  "planpage.tip":"🥇 “Believe you can, and you’re halfway there.” —Theodore Roosevelt",
+
+  "app.taskerr":"Failed to fetch tasks:",
+  "app.typeerr":"Failed to fetch task types:",
+  "app.dailytaskerr1":"Failed to fetch daily task templates:",
+  "app.dailytaskerr2":"Failed to fetch today's daily tasks:"
   
 }
