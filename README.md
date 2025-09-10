@@ -3,14 +3,14 @@
 A playful full-stack productivity web app built with **React + Flask + SQLite**.  
 Helps you plan tasks, track daily check-ins, and visualize progress — all in a cute giraffe theme.
 
-## ✨ Features
-- User authentication (JWT)
-- Task management (create/update/delete, deadlines, categories)
-- Daily check-ins with streaks
-- Statistics dashboard (weekly trends, task types, overdue tasks)
-- Pomodoro timer & “study buddy” (coming soon!)
-- **In progress**: study buddy (学习搭子) and language switch (中/EN).  
-  Currently only Chinese pages are available.
+✨ Features
+- 🔐 User authentication (JWT)
+- ✅ Task management (create/update/delete, deadlines, categories)
+- 📆 Daily check-ins with streaks
+- 📊 Statistics dashboard (weekly trends, task types, overdue tasks)
+- ⏳ Pomodoro timer
+- 🌐 Language switch (Chinese ↔ English)
+- 🧑‍🤝‍🧑 Study buddy  *(coming soon!)*
 
 ## 🛠 Tech Stack
 - **Frontend**: React 18, Recharts, Day.js  
@@ -29,8 +29,8 @@ This is my first full-stack project — I built it to learn React + Flask integr
 ---
 
 ## 🗺️ Roadmap
-- [ ] Language switch (Chinese ↔ English)  
-- [ ] Study buddy (学习搭子) collaboration features  
+- [√] Language switch (Chinese ↔ English)  
+- [ ] Study buddy collaboration features  
 - [ ] Mobile-friendly UI improvements  
 - [ ] More detailed task reminders & notifications  
 - [ ] Export/backup tasks & check-ins  
