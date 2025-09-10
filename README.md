@@ -15,15 +15,11 @@ Helps you plan tasks, track daily check-ins, and visualize progress — all in a
 <img width="1917" height="908" alt="image" src="https://github.com/user-attachments/assets/76e02bb7-c01f-4a0d-b534-40ba41d4308f" />
 
 
-### Stats Page
-<img width="1919" height="911" alt="image" src="https://github.com/user-attachments/assets/1cc9d4db-c27a-41a6-bbc1-2e783a585e05" />
 
 ### Pomodoro Page
 <img width="1919" height="908" alt="image" src="https://github.com/user-attachments/assets/c7499c13-73c6-46b0-9edc-eddc53c3cb5d" />
 
-### Chinese-English UI
-<img width="1919" height="903" alt="image" src="https://github.com/user-attachments/assets/45c1d89e-1a73-4791-b693-893cd96157d8" />
-<img width="1919" height="906" alt="image" src="https://github.com/user-attachments/assets/72a3cb6a-f067-4feb-8908-eb21fc5d4e34" />
+More screenshots can be found in docs/screenshots
 
 
 
