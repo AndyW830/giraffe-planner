@@ -1,7 +1,10 @@
+import { useTranslation } from "react-i18next";
+
 function Footer() {
+  const { t } = useTranslation();
   return (
     <footer>
-        <p>© 2025 长颈鹿计划 All rights reserved.</p>
+        <p>{t("footer.copyright")}</p>
       </footer>
   );
 }

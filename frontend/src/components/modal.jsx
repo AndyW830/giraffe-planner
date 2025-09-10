@@ -3,14 +3,17 @@ import { useState } from "react";
 
 import { API_BASE } from "../config";
 import { authFetch } from "../auth";
+import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 
 /** 添加计划弹窗 */
 function Add_Modal({ show, onClose, set_function, tasksType, settasksType }) {
+  const { t } = useTranslation();
   function addNewType() {
-  const newType = prompt("请输入新的任务类型：");
+  const newType = prompt(t("addmodal.newtype"));
   if (!newType) return;
   if (tasksType.includes(newType)) {
-    alert("该类型已存在！");
+    alert(t("addmodal.typealert"));
     return;
   }
 
@@ -24,7 +27,7 @@ function Add_Modal({ show, onClose, set_function, tasksType, settasksType }) {
       // 后端返回完整的类型列表
       settasksType(data.map((t) => t.name));
     })
-    .catch((err) => console.error("添加任务类型失败：", err));
+    .catch((err) => console.error(t("addmodal.error"), err));
 }
 
   if (!show) return null;
@@ -37,7 +40,7 @@ function Add_Modal({ show, onClose, set_function, tasksType, settasksType }) {
     const type = document.getElementById("tasksType").value;
 
     if (!title) {
-      alert("请输入计划名称");
+      alert(t("addmodal.entername"));
       return;
     }
 
@@ -57,13 +60,13 @@ function Add_Modal({ show, onClose, set_function, tasksType, settasksType }) {
     <div className="modal">
       <div className="modal-content">
         <span className="close-btn" onClick={onClose}>&times;</span>
-        <h2>添加计划</h2>
+        <h2>{t("addmodal.addplan")}</h2>
 
         <form onSubmit={add_task}>
-          <label htmlFor="title">计划名称：</label>
+          <label htmlFor="title">{t("addmodal.planname")}</label>
           <input type="text" id="title" name="title" required />
 
-          <label htmlFor="tasksType">任务类型：</label>
+          <label htmlFor="tasksType">{t("addmodal.plantype")}</label>
           <select id="tasksType" name="tasksType" required defaultValue={tasksType[0]}>
             {tasksType.map((type) => (
               <option key={type} value={type}>{type}</option>
@@ -71,16 +74,16 @@ function Add_Modal({ show, onClose, set_function, tasksType, settasksType }) {
           </select>
 
           <button type="button" onClick={addNewType} className="add-type-btn">
-            ➕ 添加新类型
+            ➕ {t("addmodal.addtype")}
           </button>
 
-          <label htmlFor="content">内容：</label>
+          <label htmlFor="content">{t("addmodal.content")}</label>
           <textarea id="content" name="content" required></textarea>
 
-          <label htmlFor="deadline">截止日期：</label>
+          <label htmlFor="deadline">{t("addmodal.deadline")}</label>
           <input type="date" id="deadline" name="deadline" required />
 
-          <button type="submit" id="submit">提交</button>
+          <button type="submit" id="submit">{t("addmodal.submit")}</button>
         </form>
       </div>
     </div>
@@ -89,6 +92,7 @@ function Add_Modal({ show, onClose, set_function, tasksType, settasksType }) {
 
 /** 计划详情弹窗（完成 / 删除） */
 function Task_Modal({ show, onClose, task, onComplete, onDelete }) {
+  const { t } = useTranslation();
   if (!show) return null;
 
   function complete_task() {
@@ -104,29 +108,29 @@ function Task_Modal({ show, onClose, task, onComplete, onDelete }) {
     <div id="task-modal" className="modal">
       <div className="modal-content">
         <span className="close-btn" id="task-closeModal" onClick={onClose}>&times;</span>
-        <h2>计划详情</h2>
+        <h2>{t("taskmodal.title")}</h2>
 
-        <h3>计划名称：</h3>
+        <h3>{t("addmodal.planname")}</h3>
         <p id="task-title">{task.title}</p>
 
-        <h3>任务类型：</h3>
+        <h3>{t("addmodal.plantype")}</h3>
         <p id="task-type">{task.type}</p>
 
-        <h3>内容：</h3>
+        <h3>{t("addmodal.content")}</h3>
         <p id="task-content">{task.content}</p>
 
-        <h3>截止日期：</h3>
+        <h3>{t("addmodal.deadline")}</h3>
         <p id="task-deadline">{task.deadline}</p>
 
         {task.completed ? (
-          <p>任务已完成✅</p>
+          <p>{t("taskmodal.completed")}✅</p>
         ) : (
           <button id="complete-btn" className="modal-button" onClick={complete_task}>
-            完成任务
+            {t("taskmodal.completetask")}
           </button>
         )}
         <button id="delete-btn" className="modal-button" onClick={delete_task}>
-          删除任务
+          {t("taskmodal.deletetask")}
         </button>
       </div>
     </div>
@@ -134,6 +138,7 @@ function Task_Modal({ show, onClose, task, onComplete, onDelete }) {
 }
 
 function DailyTask_Modal({ show, onClose, daily_tasks, set_daily_tasks, dailycheckins, set_daily_checkins }) {
+  const { t } = useTranslation();
   const [showAddModal, setShowAddModal] = useState(false);
   if (!show) return null;
 
@@ -144,7 +149,7 @@ function DailyTask_Modal({ show, onClose, daily_tasks, set_daily_tasks, dailyche
   function delete_task(taskID) {
     authFetch(`/api/daily-templates/${taskID}`, { method: "DELETE" })
       .then(res => {
-        if (!res.ok) throw new Error("删除失败");
+        if (!res.ok) throw new Error(t("dailytaskmodal.faildelete"));
         // 1) 列表里移除该模板
         set_daily_tasks(daily_tasks.filter(t => t.id !== taskID));
         // 2) 只清 “今天及以后” 的本地映射
@@ -161,7 +166,7 @@ function DailyTask_Modal({ show, onClose, daily_tasks, set_daily_tasks, dailyche
             return next;
           });
           })
-      .catch(err => console.error("删除打卡任务失败:", err));
+      .catch(err => console.error(t("dailytaskmodal.faildeletealert"), err));
   }
 
   return (
@@ -169,15 +174,15 @@ function DailyTask_Modal({ show, onClose, daily_tasks, set_daily_tasks, dailyche
       <Add_daily_task_modal show={showAddModal} onClose={closeAddModal} set_daily_tasks={set_daily_tasks} set_daily_checkins={set_daily_checkins}/>
       <div className="modal-content">
         <span className="close-btn" id="daily-task-closeModal" onClick={onClose}>&times;</span>
-        <h2>打卡任务详情</h2>
-        <button className="add-daily-task-btn" onClick={add_task}>添加打卡任务</button>
-        <h3>打卡任务列表：</h3>
+        <h2>{t("dailytaskmodal.title")}</h2>
+        <button className="add-daily-task-btn" onClick={add_task}>{t("dailytaskmodal.addcheckin")}</button>
+        <h3>{t("dailytaskmodal.list")}</h3>
 
         {daily_tasks.map(task => (
           <div key={task.id} className="daily-task-item">
             <h4>{task.title}</h4>
             <button className="delete-daily-task-btn" onClick={() => delete_task(task.id)}>
-              删除打卡
+              {t("dailytaskmodal.deletetask")}
             </button>
           </div>
         ))}
@@ -217,18 +222,18 @@ function Add_daily_task_modal({ show, onClose, set_daily_tasks, set_daily_checki
             onClose();
           });
       })
-      .catch(err => console.error("添加打卡任务失败:", err));
+      .catch(err => console.error(t("dailytaskmodal.failadd"), err));
   }
 
   return (
     <div className="modal">
       <div className="modal-content">
         <span className="close-btn" onClick={onClose}>&times;</span>
-        <h2>添加打卡任务</h2>
+        <h2>{t("dailytaskmodal.addcheckin")}</h2>
         <form onSubmit={add_daily_task}>
-          <label htmlFor="daily-task-title">打卡任务名称：</label>
+          <label htmlFor="daily-task-title">{t("dailytaskmodal.name")}</label>
           <input type="text" id="daily-task-title" name="daily-task-title" required />
-          <button type="submit" id="submit-daily-task">提交</button>
+          <button type="submit" id="submit-daily-task">{t("submit")}</button>
         </form>
       </div>
     </div>

@@ -26,3 +26,6 @@ backend/giraffe.db
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+*.db-shm
+*.db-wal

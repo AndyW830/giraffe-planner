@@ -4,8 +4,10 @@ import Header from "../components/header";
 import Sidebar from "../components/sidebar";
 import Footer from "../components/footer";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function Buddy() {
+  const { t } = useTranslation();
   return (
     <div className="buddy-page">
       <div className="container">
@@ -15,8 +17,8 @@ function Buddy() {
           <Header />
 
           <div className="topbar">
-            <h1>🦒 学习搭子</h1>
-            <p>小长颈鹿正在搭建学习伙伴中心，敬请期待～</p>
+            <h1>{t("buddy.title")}</h1>
+            <p>{t("buddy.message")}</p>
           </div>
 
           <section className="task-section">
@@ -52,18 +54,18 @@ function Buddy() {
                     fontSize: "24px",
                   }}
                 >
-                  功能建设中…
+                  {t("buddy.constructing")}
                 </h2>
                 <p style={{ margin: 0, color: "#666", fontSize: "16px" }}>
-                  小长颈鹿正在搬砖：匹配学习搭子、共享任务、互相监督打卡… 很快见面！
+                  {t("buddy.sentence")}
                 </p>
 
                 <div style={{ marginTop: "18px", display: "flex", gap: "12px" }}>
                   <Link to="/plan" className="add-task-btn">
-                    去我的计划 📖
+                    {t("buddy.plan")}
                   </Link>
                   <Link to="/daily-tasks" className="add-task-btn">
-                    去打卡记录 ✅
+                    {t("buddy.dailytasks")}
                   </Link>
                 </div>
               </div>
@@ -78,7 +80,7 @@ function Buddy() {
                 textAlign: "center",
               }}
             >
-              Tip：学习搭子会在后续版本开放～
+              {t("buddy.tip")}
             </div>
           </section>
 

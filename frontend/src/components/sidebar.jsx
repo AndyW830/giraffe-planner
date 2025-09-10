@@ -1,15 +1,17 @@
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 function Sidebar() {
+  const { t } = useTranslation();
   return (
     <nav className="sidebar">
-      <h2><Link to={"/"}>🦒 长颈鹿计划</Link></h2>
+      <h2><Link to={"/"}>{t("sidebar.giraffePlanner")}</Link></h2>
       <ul>
-        <li><Link to={"/"}>回到首页</Link></li>
-        <li><Link to="/plan">我的计划 📖</Link></li>
-        <li><Link to="/daily-tasks">打卡记录 📆</Link></li>
-        <li><Link to="/stats">统计分析 📊</Link></li>
-        <li><Link to="/porodomo">番茄钟 🍅</Link></li>
-        <li><Link to="/buddy">学习搭子 📚</Link></li>
+        <li><Link to={"/"}>{t("sidebar.home")}</Link></li>
+        <li><Link to="/plan">{t("sidebar.plan")}</Link></li>
+        <li><Link to="/daily-tasks">{t("sidebar.checkin")}</Link></li>
+        <li><Link to="/stats">{t("sidebar.stats")}</Link></li>
+        <li><Link to="/porodomo">{t("sidebar.pomodoro")}</Link></li>
+        <li><Link to="/buddy">{t("sidebar.studyBuddy")}</Link></li>
       </ul>
     </nav>
   );

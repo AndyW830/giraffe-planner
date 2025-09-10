@@ -1,14 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import LanguageSwitcher from './languageswitcher';
+import { useTranslation } from 'react-i18next';
 
 function Header() {
+  const { t } = useTranslation();
   return (
     <header>
       <ul>
-        <li><Link to="#" onClick={e => e.preventDefault()}>关于长颈鹿</Link></li>
-        <li><Link to="#" onClick={e => e.preventDefault()}>联系作者</Link></li>
-        <li><Link to="#" onClick={e => e.preventDefault()}>反馈中心</Link></li>
+        <li><Link to="#" onClick={e => e.preventDefault()}>{t("header.about")}</Link></li>
+        <li><Link to="#" onClick={e => e.preventDefault()}>{t("header.contact")}</Link></li>
+        <li><Link to="#" onClick={e => e.preventDefault()}>{t("header.feedback")}</Link></li>
+        <li><LanguageSwitcher /></li>
       </ul>
     </header>
   );
@@ -16,14 +19,16 @@ function Header() {
 
 
 function Header_welcome() {
+  const { t } = useTranslation();
   return (
     <header>
       <ul>
-        <li><Link to="#" onClick={e => e.preventDefault()}>关于长颈鹿</Link></li>
-        <li><Link to="#" onClick={e => e.preventDefault()}>联系作者</Link></li>
-        <li><Link to="#" onClick={e => e.preventDefault()}>反馈中心</Link></li>
+        <li><Link to="#" onClick={e => e.preventDefault()}>{t("header.about")}</Link></li>
+        <li><Link to="#" onClick={e => e.preventDefault()}>{t("header.contact")}</Link></li>
+        <li><Link to="#" onClick={e => e.preventDefault()}>{t("header.feedback")}</Link></li>
+        <li><LanguageSwitcher /></li>
       </ul>
-      <h1 className="Welcome">欢迎回来!</h1>
+      <h1 className="Welcome">{t("Welcome")}</h1>
     </header>
   );
 }

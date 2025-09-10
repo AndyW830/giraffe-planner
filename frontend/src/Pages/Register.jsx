@@ -2,8 +2,10 @@ import { useState } from "react";
 import { API_BASE } from "../config";
 import "../assets/login-style.css"
 import { authFetch } from "../auth";
+import { useTranslation } from "react-i18next";
 
 export default function Register() {
+  const { t } = useTranslation();
   const [email, setE] = useState("");
   const [password, setP] = useState("");
   const [msg, setMsg] = useState("");
@@ -18,21 +20,21 @@ export default function Register() {
         body: JSON.stringify({ email: email.trim(), password }),
       });
       const data = await r.json();
-      if (!r.ok) throw new Error(data.error || "注册失败");
-      setMsg("注册成功，请去登录");
+      if (!r.ok) throw new Error(data.error || t("register.fail"));
+      setMsg(t("register.success"));
     } catch (err) { setMsg(err.message); }
   };
 
   return (
     <div className="login-card">
-      <h2>注册</h2>
+      <h2>{t("register.register")}</h2>
       <form onSubmit={submit}>
-        <input placeholder="邮箱" value={email} onChange={e=>setE(e.target.value)} />
-        <input placeholder="密码" type="password" value={password} onChange={e=>setP(e.target.value)} />
-        <button type="submit">注册</button>
-        {msg && <p style={{color: msg.includes("成功") ? "green" : "red"}}>{msg}</p>}
+        <input placeholder={t("register.email")} value={email} onChange={e=>setE(e.target.value)} />
+        <input placeholder={t("register.password")} type="password" value={password} onChange={e=>setP(e.target.value)} />
+        <button type="submit">{t("register.register")}</button>
+        {msg && <p style={{color: msg.includes("successful") ? "green" : "red"}}>{msg}</p>}
       </form>
-      <p style={{marginTop:8}}>已有账号？去 <a href="/login">登录</a></p>
+      <p style={{marginTop:8}}>{t("register.nouser")} <a href="/login">{t("register.login")}</a></p>
     </div>
   );
 }

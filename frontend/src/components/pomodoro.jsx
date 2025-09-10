@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../assets/pomodoro.css";
+import { useTranslation } from "react-i18next";
 
 const DURATIONS = {
   pomodoro: 25 * 60,
@@ -8,11 +9,12 @@ const DURATIONS = {
 };
 
 function PomodoroTimer() {
+  const { t } = useTranslation();
   const [mode, setMode] = useState("pomodoro"); // 'pomodoro' | 'short_break' | 'long_break'
   const [timeLeft, setTimeLeft] = useState(DURATIONS.pomodoro);
   const [isRunning, setIsRunning] = useState(false);
-  const [sessionCount, setSessionCount] = useState(0); // 完成番茄次数
-  const [pomodoroStreak, setPomodoroStreak] = useState(0); // 当前 streak
+  const [sessionCount, setSessionCount] = useState(0); // Times that pomodoro completed today
+  const [pomodoroStreak, setPomodoroStreak] = useState(0); // Streak of pomodoros completed in current cycle
 
 
   useEffect(() => {
@@ -62,9 +64,9 @@ function PomodoroTimer() {
   };
 
   const modeDisplay = {
-    pomodoro: "🍅 专注中",
-    short_break: "☕ 短休息",
-    long_break: "🛀 长休息",
+    pomodoro: t("pomodoro.focus"),
+    short_break: t("pomodoro.short"),
+    long_break: t("pomodoro.long"),
   };
 
   const handleReset = () => {
@@ -74,15 +76,15 @@ function PomodoroTimer() {
 
   return (
     <div className="pomodoro-container">
-      <h1>番茄钟</h1>
+      <h1>{t("pomodoro.title")}</h1>
       <div className="timer">{formatTime(timeLeft)}</div>
       <div className="status">{modeDisplay[mode]}</div>
       <div className="buttons">
-        <button onClick={() => setIsRunning(true)}>开始</button>
-        <button onClick={() => setIsRunning(false)}>暂停</button>
-        <button onClick={handleReset}>重置</button>
+        <button onClick={() => setIsRunning(true)}>{t("pomodoro.start")}</button>
+        <button onClick={() => setIsRunning(false)}>{t("pomodoro.pause")}</button>
+        <button onClick={handleReset}>{t("pomodoro.reset")}</button>
       </div>
-      <p className="counter">今日完成番茄数：{sessionCount}</p>
+      <p className="counter">{t("pomodoro.timer")}{sessionCount}</p>
     </div>
   );
 }

@@ -26,9 +26,10 @@ app.config["JWT_HEADER_TYPE"]    = "Bearer"
 
 jwt = JWTManager(app)
 
+
 # 允许本地联调的前端来源（5173/3000 二选一或都保留）
 CORS(app, resources={ r"/api/*": {
-    "origins": os.getenv("CORS_ORIGINS", "").split(","),
+    "origins": os.getenv("CORS_ORIGINS", "http://localhost:5173").split(","),
     "allow_headers": ["Content-Type", "Authorization"],
     "expose_headers": ["Content-Type", "Authorization"]
 }}, supports_credentials=False)

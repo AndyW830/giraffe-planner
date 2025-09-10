@@ -9,9 +9,11 @@ import { DailyTask_Modal } from "../components/modal";
 import Calendar from "../components/calendar";
 import { API_BASE } from "../config";
 import { authFetch } from "../auth";
+import { useTranslation } from "react-i18next";
 
 
 function DailyTasks({ dailyTaskTemplates, setDailyTaskTemplates, dailyCheckins, setDailyCheckins }) {
+    const { t } = useTranslation();
     const [showTaskModal, setShowTaskModal] = useState(false);
     const today = dayjs().format("YYYY-MM-DD");
     const todayCheckins = dailyCheckins[today] || {};
@@ -39,7 +41,7 @@ function DailyTasks({ dailyTaskTemplates, setDailyTaskTemplates, dailyCheckins, 
             [today]: { ...(prev[today] || {}), [taskID]: true }
             }));
         })
-        .catch(err => console.error("打卡更新失败:", err));
+        .catch(err => console.error(t("dailytasks.err"), err));
         }
 
 
@@ -50,8 +52,8 @@ function DailyTasks({ dailyTaskTemplates, setDailyTaskTemplates, dailyCheckins, 
                 <div className="main-content">
                     <Header />
                     <div className="topbar">
-                        <h1>📆 打卡记录</h1>
-                        <p>今日打卡情况：✅{completedToday} / {dailyTaskTemplates.length}</p>
+                        <h1>{t("dailytasks.title")}</h1>
+                        <p>{t("dailytasks.today")}{completedToday} / {dailyTaskTemplates.length}</p>
                     </div>
 
                     <DailyTask_Modal
@@ -64,7 +66,7 @@ function DailyTasks({ dailyTaskTemplates, setDailyTaskTemplates, dailyCheckins, 
                     />
 
                     <section className="task-section">
-                        <h3>✅ 今日打卡任务</h3>
+                        <h3>{t("dailytasks.todaytasks")}</h3>
 
                         {dailyTaskTemplates.length > 0 ? (
                             dailyTaskTemplates.map(task => (
@@ -76,9 +78,9 @@ function DailyTasks({ dailyTaskTemplates, setDailyTaskTemplates, dailyCheckins, 
                                 />
                             ))
                         ) : (
-                            <div className="empty-tasks-hint">今日暂无打卡任务</div>
+                            <div className="empty-tasks-hint">{t("dailytasks.notask")}</div>
                         )}
-                        <button className="add-task-btn" onClick={openTaskModal}>➕ ➖管理打卡项目</button>
+                        <button className="add-task-btn" onClick={openTaskModal}>{t("dailytasks.manage")}</button>
                     </section>
 
                     <Calendar dailyCheckins={dailyCheckins} dailyTaskTemplates={dailyTaskTemplates}/>

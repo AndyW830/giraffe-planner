@@ -1,6 +1,8 @@
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
+import { useTranslation } from "react-i18next";
 
 function CustomTooltip({ active, payload, label }) {
+  const { t } = useTranslation();
   if (active && payload && payload.length) {
     return (
       <div style={{
@@ -12,8 +14,8 @@ function CustomTooltip({ active, payload, label }) {
         fontSize: "14px",
         color: "#333"
       }}>
-        <p style={{ marginBottom: "4px", fontWeight: "bold" }}>{`📅 日期: ${label}`}</p>
-        <p style={{ color: "#d94848" }}>{`⏰ 逾期任务: ${payload[0].value}`}</p>
+        <p style={{ marginBottom: "4px", fontWeight: "bold" }}>{t("overduechart.date", { label })}</p>
+        <p style={{ color: "#d94848" }}>{t("overduechart.task", { count: payload[0].value })}</p>
       </div>
     );
   }

@@ -7,11 +7,13 @@ import {
   Tooltip,       // 悬停时显示数值
   ResponsiveContainer // 响应式容器（自动适配页面宽度）
 } from 'recharts';
-
+import { useTranslation } from "react-i18next";
 function DailyLineChart({ data }) {
+  const { t } = useTranslation();
+
   return (
     <section className="chart-section">
-        <h3>📈 最近30天完成趋势</h3>
+        <h3>📈 {t("linechart.hint")}</h3>
         <div style={{ width: '100%', height: 300 }} className="daily-line-chart">
         <ResponsiveContainer>
             <LineChart data={data} margin={{ top: 20, right: 30, bottom: 5, left: 0 }}>

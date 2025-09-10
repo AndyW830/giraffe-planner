@@ -10,15 +10,17 @@ import { useEffect } from "react";
 import Footer from "../components/footer";
 import { useLocation, useNavigate } from "react-router-dom";
 import { authFetch } from "../auth";
+import { useTranslation } from "react-i18next";
 
 
 
 function PlanPage({ tasks, setTasks, tasksType, settasksType }) {
-  // ======== 时间基准 ========
+  const { t } = useTranslation();
+  // ======== Time ========
   const today = dayjs();
   const oneWeekLater = today.add(7, "day");
 
-  // ======== 纯派生数据：用 useMemo，而不是 useEffect + setState ========
+  // ======== Usememo ========
   const visibleTasks = useMemo(
     () => (tasks || []).filter((t) => !t.deleted),
     [tasks]
@@ -36,7 +38,7 @@ function PlanPage({ tasks, setTasks, tasksType, settasksType }) {
     return visibleTasks.filter((task) => {
       if (!task.deadline) return false;
       const d = dayjs(task.deadline);
-      // 不在“本周区间” 或者 已经是过去且已完成
+      // Not in this week OR (in the past AND completed)
       const notInThisWeek = !(d.isAfter(today, "day") && d.isBefore(oneWeekLater, "day"));
       const pastAndCompleted = d.isBefore(today, "day") && task.completed;
       return notInThisWeek || pastAndCompleted;
@@ -51,7 +53,7 @@ function PlanPage({ tasks, setTasks, tasksType, settasksType }) {
     });
   }, [visibleTasks, today]);
 
-  // ======== 任务 CRUD ========
+  // ======== Task CRUD ========
   function add_task(title, content, deadline, type) {
     authFetch("/api/tasks", {
       method: "POST",
@@ -59,7 +61,7 @@ function PlanPage({ tasks, setTasks, tasksType, settasksType }) {
       body: JSON.stringify({ title, content, deadline, type }),
     })
       .then((res) => {
-        if (!res.ok) throw new Error("添加失败");
+        if (!res.ok) throw new Error(t("planpage.adderr"));
         return res.json();
       })
       .then(() => {
@@ -76,7 +78,7 @@ function PlanPage({ tasks, setTasks, tasksType, settasksType }) {
         setTasks(formatted);
       })
       .catch((err) => {
-        console.error("添加任务失败：", err);
+        console.error(t("planpage.adderralert"), err);
       });
   }
 
@@ -88,7 +90,7 @@ function PlanPage({ tasks, setTasks, tasksType, settasksType }) {
       body: JSON.stringify({ completed: true, completed_date }),
     })
       .then((res) => {
-        if (!res.ok) throw new Error("完成失败");
+        if (!res.ok) throw new Error(t("planpage.completeerr"));
         return res.json();
       })
       .then(() => authFetch("/api/tasks"))
@@ -103,7 +105,7 @@ function PlanPage({ tasks, setTasks, tasksType, settasksType }) {
         setTasks(formatted);
       })
       .catch((err) => {
-        console.error("完成任务失败：", err);
+        console.error(t("planpage.completeerralert"), err);
       });
   }
 
@@ -114,7 +116,7 @@ function PlanPage({ tasks, setTasks, tasksType, settasksType }) {
       body: JSON.stringify({ deleted: true }),
     })
       .then((res) => {
-        if (!res.ok) throw new Error("删除失败");
+        if (!res.ok) throw new Error(t("planpage.deleteerr"));
         return res.json();
       })
       .then(() => authFetch("/api/tasks"))
@@ -129,7 +131,7 @@ function PlanPage({ tasks, setTasks, tasksType, settasksType }) {
         setTasks(formatted);
       })
       .catch((err) => {
-        console.error("删除任务失败：", err);
+        console.error(t("planpage.deleterralert"), err);
       });
   }
 
@@ -160,11 +162,11 @@ function PlanPage({ tasks, setTasks, tasksType, settasksType }) {
           <Header />
 
           <div className="topbar">
-            <h1>📋 我的计划</h1>
+            <h1>{t("planpage.title")}</h1>
           </div>
 
           <button className="add-task-btn" onClick={openAddModal}>
-            ➕ 添加新任务
+            {t("planpage.addplan")}
           </button>
 
           <Add_Modal
@@ -185,7 +187,7 @@ function PlanPage({ tasks, setTasks, tasksType, settasksType }) {
           />
 
           <div className="task-section">
-            <h3>📅 本周任务</h3>
+            <h3>{t("planpage.weeklyplan")}</h3>
             {weekly_tasks.length > 0 ? (
               weekly_tasks.map((task) => (
                 <TaskCard
@@ -197,10 +199,10 @@ function PlanPage({ tasks, setTasks, tasksType, settasksType }) {
                 />
               ))
             ) : (
-              <div className="empty-tasks-hint">🎉 本周暂时没有任务安排哦，放松一下吧~</div>
+              <div className="empty-tasks-hint">{t("planpage.notaskshint1")}</div>
             )}
 
-            <h3>📅 其他任务</h3>
+            <h3>{t("planpage.othertasks")}</h3>
             {other_tasks.length > 0 ? (
               other_tasks.map((task) => (
                 <TaskCard
@@ -213,11 +215,11 @@ function PlanPage({ tasks, setTasks, tasksType, settasksType }) {
               ))
             ) : (
               <div className="empty-tasks-hint">
-                🎉 暂时没有更远的任务安排，可以专注完成本周任务～
+                {t("planpage.notaskshint2")}
               </div>
             )}
 
-            <h3>⚠️ 逾期任务</h3>
+            <h3>{t("planpage.overdue")}</h3>
             {pastDueTasks.length > 0 ? (
               pastDueTasks.map((task) => (
                 <TaskCard
@@ -229,12 +231,12 @@ function PlanPage({ tasks, setTasks, tasksType, settasksType }) {
                 />
               ))
             ) : (
-              <div className="empty-tasks-hint">🎉 没有逾期任务，继续保持！</div>
+              <div className="empty-tasks-hint">{t("planpage.notaskshint3")}</div>
             )}
           </div>
 
           <div className="tip">
-            🍋 每一次努力，都是在为未来的惊喜积蓄力量，加油呀长颈鹿少年！
+            {t("planpage.tip")}
           </div>
 
           <Footer />

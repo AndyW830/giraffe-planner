@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
-
+import { useTranslation } from "react-i18next";
 function Calendar({ dailyCheckins, dailyTaskTemplates }) {
+  const { t } = useTranslation();
 
   const today = dayjs();
   const startOfWeek = today.startOf("week"); // 周日开始
@@ -35,11 +36,11 @@ function Calendar({ dailyCheckins, dailyTaskTemplates }) {
 
   return (
     <section className="task-section">
-      <h3>📅 本周打卡记录</h3>
+      <h3>📅 {t("calendar.hint")}</h3>
       <div className="calendar">
         <div className="calendar-header">
-          <span>日</span><span>一</span><span>二</span><span>三</span>
-          <span>四</span><span>五</span><span>六</span>
+          <span>{t("calendar.sun")}</span><span>{t("calendar.mon")}</span><span>{t("calendar.tue")}</span><span>{t("calendar.wed")}</span>
+          <span>{t("calendar.thu")}</span><span>{t("calendar.fri")}</span><span>{t("calendar.sat")}</span>
         </div>
         <div className="calendar-body">
           {weekDays.map((day) => (
